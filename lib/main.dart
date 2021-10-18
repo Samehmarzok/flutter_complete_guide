@@ -30,25 +30,37 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var questions = [
-      'What\'s your favorit color?',
-      'What\'s your favorit Animal?'
+      //Create a Map
+      {
+        'QuestionText': 'What\'s your favorit color?',
+        'Answers': ['Black', 'Red', 'Green'],
+      },
+      {
+        'QuestionText': 'What\'s your favorit Animal?',
+        'Answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+      },
+      {
+        'QuestionText': 'Who\'s your favorit Instructor?',
+        'Answers': ['Max', 'Stef', 'Hanz', 'Sameh'],
+      },
     ];
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(
-        title: Text('My First App'),
-      ),
-      body: Column(
-        children: [
-          // Custom Widget File
-          Question(
-            questions[_questionIndex],
-          ),
-          Answer(_answerQuestions),
-          Answer(_answerQuestions),
-          Answer(_answerQuestions),
-        ],
-      ),
-    ));
+            appBar: AppBar(
+              title: Text('My First App'),
+            ),
+            body: Column(
+              children: [
+                // Custom Widget File
+                Question(
+                  questions[_questionIndex]['QuestionText'],
+                ),
+                // Dynamic BTN According to Map
+                ...(questions[_questionIndex]['Answers'] as List<String>)
+                    .map((answer) {
+                  return Answer(_answerQuestions, answer);
+                }).toList()
+              ],
+            )));
   }
 }
