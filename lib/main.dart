@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
+    const questions = [
       //Create a Map
       {
         'QuestionText': 'What\'s your favorit color?',
