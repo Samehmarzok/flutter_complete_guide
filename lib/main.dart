@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/result.dart';
 
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 //void main() {
 //runApp(MyApp());
@@ -18,6 +19,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _questions = const [
+    //Create a Map
+    {
+      'QuestionText': 'What\'s your favorit color?',
+      'Answers': ['Black', 'Red', 'Green'],
+    },
+    {
+      'QuestionText': 'What\'s your favorit Animal?',
+      'Answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+    },
+    {
+      'QuestionText': 'Who\'s your favorit Instructor?',
+      'Answers': ['Max', 'Stef', 'Hanz', 'Sameh'],
+    },
+  ];
+
   var _questionIndex = 0;
 
   void _answerQuestions() {
@@ -25,42 +42,28 @@ class _MyAppState extends State<MyApp> {
       _questionIndex = _questionIndex + 1;
     });
     print(_questionIndex);
+
+    if (_questionIndex < _questions.length) {
+      print('we have more questions!');
+    } else {
+      print('No More Questions');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    const questions = [
-      //Create a Map
-      {
-        'QuestionText': 'What\'s your favorit color?',
-        'Answers': ['Black', 'Red', 'Green'],
-      },
-      {
-        'QuestionText': 'What\'s your favorit Animal?',
-        'Answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
-      },
-      {
-        'QuestionText': 'Who\'s your favorit Instructor?',
-        'Answers': ['Max', 'Stef', 'Hanz', 'Sameh'],
-      },
-    ];
     return MaterialApp(
         home: Scaffold(
-            appBar: AppBar(
-              title: Text('My First App'),
-            ),
-            body: Column(
-              children: [
-                // Custom Widget File
-                Question(
-                  questions[_questionIndex]['QuestionText'],
-                ),
-                // Dynamic BTN According to Map
-                ...(questions[_questionIndex]['Answers'] as List<String>)
-                    .map((answer) {
-                  return Answer(_answerQuestions, answer);
-                }).toList()
-              ],
-            )));
+      appBar: AppBar(
+        title: Text('My First App'),
+      ),
+      body: _questionIndex < _questions.length
+          ? Quiz(
+              answerQuestion: _answerQuestions,
+              questions: _questions,
+              questionIndex: _questionIndex,
+            )
+          : Result(),
+    ));
   }
 }
